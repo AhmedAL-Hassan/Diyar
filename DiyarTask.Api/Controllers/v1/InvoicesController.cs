@@ -3,8 +3,10 @@ namespace DiyarTask.Api.Controllers.v1;
 using DiyarTask.Application.Commands.Invoices.CreateInvoiceCommand;
 using DiyarTask.Application.Commands.Invoices.DeleteInvoiceCommand;
 using DiyarTask.Application.Commands.Invoices.UpdateInvoiceCommand;
+using DiyarTask.Application.Queries.GetCustomerQuery;
 using DiyarTask.Application.Queries.GetFilteredInvoicesQuery;
 using DiyarTask.Contracts.Invoices;
+using DiyarTask.Domain.Aggregates.CustomerrAggregate;
 using DiyarTask.Shared.Models.Response.Invoice;
 using MapsterMapper;
 using MediatR;
@@ -43,7 +45,10 @@ public sealed class InvoicesController : ControllerBase
     [HttpGet("{InvoiceId:guid}", Name = "GetInvoice")]
     public async Task<ActionResult<InvoiceDto>> GetInvoice(Guid InvoiceId)
     {
-        return Ok(new InvoiceDto());
+        var query = new GetInvoiceQuery(InvoiceId);
+        var response = await _mediator.Send(query);
+
+        return Ok(response);
     }
 
     /// <summary>

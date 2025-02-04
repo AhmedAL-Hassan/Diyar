@@ -3,7 +3,7 @@ using DiyarTask.Shared.Models.Response.Customer;
 using MediatR;
 using System.Linq.Expressions;
 
-namespace DiyarTask.Application.Queries.GetFilteredCustomersQuery
+namespace DiyarTask.Application.Queries.Customers.GetFilteredCustomersQuery
 {
     public sealed class GetFilteredCustomersQuery : BaseQuery<Customer>, IRequest<List<CustomerDto>>
     {

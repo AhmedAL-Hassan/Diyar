@@ -3,7 +3,8 @@ namespace DiyarTask.Api.Controllers.v1;
 using DiyarTask.Application.Commands.Customers.CreateCustomerCommand;
 using DiyarTask.Application.Commands.Customers.DeleteCustomerCommand;
 using DiyarTask.Application.Commands.Customers.UpdateCustomerCommand;
-using DiyarTask.Application.Queries.GetFilteredCustomersQuery;
+using DiyarTask.Application.Queries.Customers.GetCustomerQuery;
+using DiyarTask.Application.Queries.Customers.GetFilteredCustomersQuery;
 using DiyarTask.Contracts.Customers;
 using DiyarTask.Shared.Models.Response.Customer;
 using MapsterMapper;
@@ -43,7 +44,10 @@ public sealed class CustomersController : ControllerBase
     [HttpGet("{customerId:guid}", Name = "GetCustomer")]
     public async Task<ActionResult<CustomerDto>> GetCustomer(Guid customerId)
     {
-       return Ok(new CustomerDto());
+        var query = new GetCustomerQuery(customerId);
+        var response = await _mediator.Send(query);
+
+        return Ok(response);
     }
 
     /// <summary>
@@ -74,7 +78,7 @@ public sealed class CustomersController : ControllerBase
     [HttpDelete("{customerId:guid}", Name = "DeleteCustomer")]
     public async Task<IActionResult> DeleteCustomer(Guid customerId)
     {
-        var command = new DeleteCustomerAccountCommand(customerId);
+        var command = new DeleteCustomerCommand(customerId);
         var commandResponse = await _mediator.Send(command);
 
         return Ok(commandResponse);

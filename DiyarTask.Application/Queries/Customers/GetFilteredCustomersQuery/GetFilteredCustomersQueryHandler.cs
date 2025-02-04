@@ -3,7 +3,7 @@ using DiyarTask.Shared.Models.Response.Customer;
 using MapsterMapper;
 using MediatR;
 
-namespace DiyarTask.Application.Queries.GetFilteredCustomersQuery
+namespace DiyarTask.Application.Queries.Customers.GetFilteredCustomersQuery
 {
     public sealed class GetFilteredCustomersQueryHandler : IRequestHandler<GetFilteredCustomersQuery, List<CustomerDto>>
     {
