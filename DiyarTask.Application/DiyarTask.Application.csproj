@@ -22,4 +22,8 @@
     <ProjectReference Include="..\DiyarTask.Domain\DiyarTask.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Queries\Reminders\" />
+  </ItemGroup>
+
 </Project>

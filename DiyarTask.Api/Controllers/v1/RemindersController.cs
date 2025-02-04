@@ -1,101 +1,86 @@
 namespace DiyarTask.Api.Controllers.v1;
 
-using ReminderTaskManagement.Domain.Reminders.Features;
-using ReminderTaskManagement.Domain.Reminders.Dtos;
-using ReminderTaskManagement.Resources;
-using System.Text.Json;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Threading.Tasks;
-using System.Threading;
-using Asp.Versioning;
+using DiyarTask.Application.Commands.Reminders.CreateReminderCommand;
+using DiyarTask.Application.Commands.Reminders.DeleteReminderCommand;
+using DiyarTask.Application.Commands.Reminders.UpdateReminderCommand;
+using DiyarTask.Application.Queries.Reminders.GetFilteredRemindersQuery;
+using DiyarTask.Application.Queries.Reminders.GetReminderQuery;
+using DiyarTask.Contracts.Reminders;
+using DiyarTask.Shared.Models.Response.Reminder;
+using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 [ApiController]
-[Route("api/v{v:apiVersion}/reminders")]
-[ApiVersion("1.0")]
-public sealed class RemindersController(IMediator mediator): ControllerBase
-{    
+[Route("api/v{v:apiVersion}/Reminders")]
+[Asp.Versioning.ApiVersion("1.0")]
+public sealed class RemindersController : ControllerBase
+{
+    private readonly IMediator _mediator;
+    private readonly IMapper _mapper;
+
+    public RemindersController(IMediator mediator, IMapper mapper)
+    {
+        _mediator = mediator;
+        _mapper = mapper;
+    }
 
     /// <summary>
     /// Creates a new Reminder record.
     /// </summary>
     [HttpPost(Name = "AddReminder")]
-    public async Task<ActionResult<ReminderDto>> AddReminder([FromBody]ReminderForCreationDto reminderForCreation)
+    public async Task<ActionResult<ReminderDto>> AddReminder([FromBody] ReminderForCreationDto ReminderForCreationDto)
     {
-        var command = new AddReminder.Command(reminderForCreation);
-        var commandResponse = await mediator.Send(command);
+        var command = _mapper.Map<CreateReminderCommand>(ReminderForCreationDto);
+        var commandResponse = await _mediator.Send(command);
 
-        return CreatedAtRoute("GetReminder",
-            new { reminderId = commandResponse.Id },
-            commandResponse);
+        return Ok(commandResponse);
     }
-
 
     /// <summary>
     /// Gets a single Reminder by ID.
     /// </summary>
-    [HttpGet("{reminderId:guid}", Name = "GetReminder")]
-    public async Task<ActionResult<ReminderDto>> GetReminder(Guid reminderId)
+    [HttpGet("{ReminderId:guid}", Name = "GetReminder")]
+    public async Task<ActionResult<ReminderDto>> GetReminder(Guid ReminderId)
     {
-        var query = new GetReminder.Query(reminderId);
-        var queryResponse = await mediator.Send(query);
-        return Ok(queryResponse);
-    }
+        var query = new GetReminderQuery(ReminderId);
+        var response = await _mediator.Send(query);
 
+        return Ok(response);
+    }
 
     /// <summary>
     /// Gets a list of all Reminders.
     /// </summary>
     [HttpGet(Name = "GetReminders")]
-    public async Task<IActionResult> GetReminders([FromQuery] ReminderParametersDto reminderParametersDto)
+    public async Task<ActionResult<List<ReminderDto>>> GetReminders([FromQuery] ReminderParametersDto ReminderParametersDto)
     {
-        var query = new GetReminderList.Query(reminderParametersDto);
-        var queryResponse = await mediator.Send(query);
+        var query = _mapper.Map<GetFilteredRemindersQuery>(ReminderParametersDto);
+        var response = await _mediator.Send(query);
 
-        var paginationMetadata = new
-        {
-            totalCount = queryResponse.TotalCount,
-            pageSize = queryResponse.PageSize,
-            currentPageSize = queryResponse.CurrentPageSize,
-            currentStartIndex = queryResponse.CurrentStartIndex,
-            currentEndIndex = queryResponse.CurrentEndIndex,
-            pageNumber = queryResponse.PageNumber,
-            totalPages = queryResponse.TotalPages,
-            hasPrevious = queryResponse.HasPrevious,
-            hasNext = queryResponse.HasNext
-        };
-
-        Response.Headers.Append("X-Pagination",
-            JsonSerializer.Serialize(paginationMetadata));
-
-        return Ok(queryResponse);
+        return Ok(response);
     }
-
 
     /// <summary>
-    /// Updates an entire existing Reminder.
+    /// Updates an existing Reminder.
     /// </summary>
-    [HttpPut("{reminderId:guid}", Name = "UpdateReminder")]
-    public async Task<IActionResult> UpdateReminder(Guid reminderId, ReminderForUpdateDto reminder)
+    [HttpPut("{ReminderId:guid}", Name = "UpdateReminder")]
+    public async Task<ActionResult<ReminderDto>> UpdateReminder(Guid ReminderId, [FromBody] ReminderForUpdateDto ReminderForUpdateDto)
     {
-        var command = new UpdateReminder.Command(reminderId, reminder);
-        await mediator.Send(command);
-        return NoContent();
+        var command = _mapper.Map<UpdateReminderCommand>(ReminderForUpdateDto);
+        var commandResponse = await _mediator.Send(command);
+
+        return Ok(commandResponse);
     }
 
 
-    /// <summary>
-    /// Deletes an existing Reminder record.
-    /// </summary>
-    [HttpDelete("{reminderId:guid}", Name = "DeleteReminder")]
-    public async Task<ActionResult> DeleteReminder(Guid reminderId)
+    [HttpDelete("{ReminderId:guid}", Name = "DeleteReminder")]
+    public async Task<IActionResult> DeleteReminder(Guid ReminderId)
     {
-        var command = new DeleteReminder.Command(reminderId);
-        await mediator.Send(command);
-        return NoContent();
-    }
+        var command = new DeleteReminderCommand(ReminderId);
+        var commandResponse = await _mediator.Send(command);
 
-    // endpoint marker - do not delete this comment
+        return Ok(commandResponse);
+    }
 }

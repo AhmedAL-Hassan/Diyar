@@ -1,4 +1,6 @@
-﻿using DiyarTask.Domain.Core;
+﻿using DiyarTask.Domain.Aggregates.ReminderAggregate.Interfaces;
+using DiyarTask.Domain.Core;
+using DiyarTask.Shared.Enums;
 
 namespace DiyarTask.Domain.Aggregates.Reminder
 {
@@ -25,25 +27,31 @@ namespace DiyarTask.Domain.Aggregates.Reminder
         public DateTime? ModifiedDate { get; private set; }
 
         public List<ReminderUser> ReminderUsers { get; private set; }
-    }
 
-    public enum ReminderRepeatTypeEnum
-    {
-        Daily = 1,
-        Weekly = 2,
-        Monthly = 3,
-    }
+        public static Reminder AddReminder(ICreateReminderCommand request)
+        {
+            return new Reminder
+            {
+                Id = Guid.NewGuid(),
+                ReminderTiming = request.ReminderTiming,
+                DurationType = request.DurationType,
+                DurationInterval = request.DurationInterval,
+                RepeatType = request.RepeatType,
+                RepeatCount = request.RepeatCount,
+                CreatedDate = DateTime.UtcNow
+            };
+        }
 
-    public enum ReminderDurationTypeEnum
-    {
-        Days = 1,
-        Weeks = 2,
-        Months = 3,
-    }
-
-    public enum ReminderTimingEnum
-    {
-        Before = 1,
-        After = 2
+        // Method to update an existing Reminder
+        public void UpdateReminder(IUpdateReminderCommand request)
+        {
+            ReminderTiming = request.ReminderTiming;
+            DurationType = request.DurationType;
+            DurationInterval = request.DurationInterval;
+            RepeatType = request.RepeatType;
+            RepeatCount = request.RepeatCount;
+            ModifiedDate = DateTime.UtcNow;
+            ModifiedBy = request.ModifiedBy;
+        }
     }
 }

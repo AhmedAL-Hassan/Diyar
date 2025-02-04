@@ -3,8 +3,8 @@ namespace DiyarTask.Api.Controllers.v1;
 using DiyarTask.Application.Commands.Invoices.CreateInvoiceCommand;
 using DiyarTask.Application.Commands.Invoices.DeleteInvoiceCommand;
 using DiyarTask.Application.Commands.Invoices.UpdateInvoiceCommand;
-using DiyarTask.Application.Queries.GetCustomerQuery;
-using DiyarTask.Application.Queries.GetFilteredInvoicesQuery;
+using DiyarTask.Application.Queries.Invoices.GetFilteredInvoicesQuery;
+using DiyarTask.Application.Queries.Invoices.GetInvoiceQuery;
 using DiyarTask.Contracts.Invoices;
 using DiyarTask.Domain.Aggregates.CustomerrAggregate;
 using DiyarTask.Shared.Models.Response.Invoice;
@@ -79,7 +79,7 @@ public sealed class InvoicesController : ControllerBase
     [HttpDelete("{InvoiceId:guid}", Name = "DeleteInvoice")]
     public async Task<IActionResult> DeleteInvoice(Guid InvoiceId)
     {
-        var command = new DeleteInvoiceAccountCommand(InvoiceId);
+        var command = new DeleteInvoiceCommand(InvoiceId);
         var commandResponse = await _mediator.Send(command);
 
         return Ok(commandResponse);
