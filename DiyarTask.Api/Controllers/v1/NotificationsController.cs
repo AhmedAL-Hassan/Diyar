@@ -18,7 +18,7 @@
 //[ApiController]
 //[Route("api/v{v:apiVersion}/notifications")]
 //[ApiVersion("1.0")]
-//public sealed class NotificationsController(IMediator mediator): ControllerBase
+//public sealed class NotificationsController(IMediator mediator) : ControllerBase
 //{
 
 //    /// <summary>

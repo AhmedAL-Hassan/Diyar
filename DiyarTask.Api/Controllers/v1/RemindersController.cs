@@ -1,10 +1,10 @@
 namespace DiyarTask.Api.Controllers.v1;
 
 using DiyarTask.Application.Commands.Reminders.CreateReminderCommand;
-using DiyarTask.Application.Commands.Reminders.DeleteReminderCommand;
 using DiyarTask.Application.Commands.Reminders.UpdateReminderCommand;
 using DiyarTask.Application.Queries.Reminders.GetFilteredRemindersQuery;
 using DiyarTask.Application.Queries.Reminders.GetReminderQuery;
+using DiyarTask.Application.Reminders.Commands;
 using DiyarTask.Contracts.Reminders;
 using DiyarTask.Shared.Models.Response.Reminder;
 using MapsterMapper;
