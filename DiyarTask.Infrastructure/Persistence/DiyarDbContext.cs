@@ -7,9 +7,15 @@ using DiyarTask.Domain.Aggregates.Reminder;
 using Microsoft.EntityFrameworkCore;
 
 using DiyarTask.Domain.Aggregates.CustomerrAggregate;
+using DiyarTask.Infrastructure.Configurations;
 
-public class AppDbContext : DbContext
+public class DiyarDbContext : DbContext
 {
+    public DiyarDbContext(DbContextOptions<DiyarDbContext> options)
+    : base(options)
+    {
+    }
+
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Invoice> Invoices { get; set; }
     public DbSet<PaymentError> PaymentErrors { get; set; }
@@ -20,15 +26,17 @@ public class AppDbContext : DbContext
     public DbSet<Reminder> Reminders { get; set; }
     public DbSet<ReminderUser> ReminderUsers { get; set; }
 
-    public AppDbContext(DbContextOptions<AppDbContext> options)
-        : base(options)
-    {
-    }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Automatically apply all configurations in the assembly
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(DiyarDbContext).Assembly);
+        modelBuilder.ApplyConfiguration(new CustomerConfiguration());
+        modelBuilder.ApplyConfiguration(new InvoiceConfiguration());
+        modelBuilder.ApplyConfiguration(new NotificationErrorConfiguration());
+        modelBuilder.ApplyConfiguration(new NotificationTemplateConfiguration());
+        modelBuilder.ApplyConfiguration(new NotificationTypeConfiguration());
+        modelBuilder.ApplyConfiguration(new PaymentErrorConfiguration());
+        modelBuilder.ApplyConfiguration(new ReminderConfiguration());
+        modelBuilder.ApplyConfiguration(new ReminderUserConfiguration());
 
         base.OnModelCreating(modelBuilder);
     }

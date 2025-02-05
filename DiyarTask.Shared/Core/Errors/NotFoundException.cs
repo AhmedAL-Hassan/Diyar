@@ -1,20 +1,19 @@
-﻿using System.Runtime.Serialization;
+﻿namespace DiyarTask.Shared.Core.Errors;
 
-namespace DiyarTask.Shared.Core.Errors
+[Serializable]
+public sealed class NotFoundException : Exception
 {
-    [Serializable]
-    public sealed class NotFoundException : Exception
+    public NotFoundException()
     {
-        public NotFoundException()
-        {
-        }
+    }
 
-        public NotFoundException(string? message) : base(message)
-        {
-        }
+    public NotFoundException(string? message)
+        : base(message)
+    {
+    }
 
-        public NotFoundException(string? message, Exception? innerException) : base(message, innerException)
-        {
-        }
+    public NotFoundException(string? message, Exception? innerException)
+        : base(message, innerException)
+    {
     }
 }

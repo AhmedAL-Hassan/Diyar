@@ -1,9 +1,8 @@
-﻿namespace DiyarTask.Shared.Enums
+﻿namespace DiyarTask.Shared.Enums;
+
+public enum ReminderDurationTypeEnum
 {
-    public enum ReminderDurationTypeEnum
-    {
-        Days = 1,
-        Weeks = 2,
-        Months = 3,
-    }
+    Days = 1,
+    Weeks = 2,
+    Months = 3,
 }

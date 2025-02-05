@@ -10,12 +10,8 @@ public sealed class Customer : BaseEntity<Guid>, IAuditableEntity
     public string Name { get; private set; }
     public string Email { get; private set; }
     public string PhoneNumber { get; private set; }
-
-    // Navigation property
-    public ICollection<Invoice> Invoices { get; private set; } // الفواتير المرتبطة
-
-    public ICollection<Notification> Notifications { get; private set; } // الإشعارات المرتبطة
-
+    public ICollection<Invoice> Invoices { get; private set; }
+    public ICollection<Notification> Notifications { get; private set; }
     public string CreatedBy { get; private set; }
     public string ModifiedBy { get; private set; }
     public DateTime CreatedDate { get; private set; }
@@ -34,10 +30,10 @@ public sealed class Customer : BaseEntity<Guid>, IAuditableEntity
         return Customerr;
     }
 
-    public void Change(string name)
+    public void ChangeName(string name)
     {
         Name = name;
-        //AddDomainEvent(new CustomerChangedEvent(Id, name));
+        // AddDomainEvent(new CustomerChangedEvent(Id, name));
     }
 
     public void Update(IUpdateCustomerCommand request)

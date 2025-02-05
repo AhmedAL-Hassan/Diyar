@@ -1,8 +1,7 @@
-﻿namespace DiyarTask.Shared.Enums
+﻿namespace DiyarTask.Shared.Enums;
+
+public enum ReminderTimingEnum
 {
-    public enum ReminderTimingEnum
-    {
-        Before = 1,
-        After = 2
-    }
+    Before = 1,
+    After = 2
 }

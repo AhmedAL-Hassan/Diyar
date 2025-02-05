@@ -1,24 +1,23 @@
-﻿using DiyarTask.Domain.Core;
+﻿namespace DiyarTask.Infrastructure.Persistence.Repositories;
 
-namespace DiyarTask.Infrastructure.Persistence.Repositories
+using DiyarTask.Domain.Core;
+
+public class UnitOfWork : IUnitOfWork
 {
-    public class UnitOfWork : IUnitOfWork
+    private readonly DiyarDbContext _context;
+
+    public UnitOfWork(DiyarDbContext context)
     {
-        private readonly AppDbContext _context;
+        _context = context;
+    }
 
-        public UnitOfWork(AppDbContext context)
-        {
-            _context = context;
-        }
+    public async Task<int> SaveChangesAsync()
+    {
+        return await _context.SaveChangesAsync();
+    }
 
-        public async Task<int> SaveChangesAsync()
-        {
-            return await _context.SaveChangesAsync();
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+    public void Dispose()
+    {
+        _context.Dispose();
     }
 }

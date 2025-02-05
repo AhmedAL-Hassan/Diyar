@@ -1,42 +1,50 @@
-using DiyarTask.Api.Mapping;
-using DiyarTask.Application;
-using DiyarTask.Domain.Core.Configs;
-using DiyarTask.Infrastructure;
+using Asp.Versioning;
+
+using DiyarTask.Application.DI;
+using DiyarTask.Infrastructure.DI;
+
 using Mapster;
-using MapsterMapper;
 
 var builder = WebApplication.CreateBuilder(args);
-{
-    // Add services to the container.
-    builder.Services
-        .AddApplication()
-        .AddInfrastructure(builder.Configuration);
 
-    builder.Services.AddMapster();
+AddAppServices(builder.Services, builder.Configuration);
+ConfigureAutoMapper(builder.Services);
+ConfigureAddApiVersioning(builder.Services);
 
-    builder.Services.AddControllers();
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
-
-    builder.Services.AddPersistance(builder.Configuration);
-}
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
 {
-    //Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
-    {
-        app.UseSwagger();
-        app.UseSwaggerUI();
-    }
-    else
-    {
-        app.UseExceptionHandler("/Error");
-    }
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
-    app.MapControllers();
-    app.UseHttpsRedirection();
+app.UseHttpsRedirection();
+app.UseAuthorization();
+app.MapControllers();
 
-    app.Run();
+app.Run();
+
+static void AddAppServices(IServiceCollection services, IConfiguration configuration)
+{
+    services.AddInfrastructureServices(configuration);
+    services.AddApplicationServices();
+}
+
+static void ConfigureAutoMapper(IServiceCollection services)
+{
+    services.AddMapster();
+}
+
+static void ConfigureAddApiVersioning(IServiceCollection services)
+{
+    services.AddApiVersioning(options =>
+    {
+        options.ReportApiVersions = true;
+        options.AssumeDefaultVersionWhenUnspecified = true;
+        options.DefaultApiVersion = ApiVersion.Default;
+    });
 }

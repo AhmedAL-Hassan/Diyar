@@ -10,5 +10,4 @@ public sealed record CustomerDto
     public string ModifiedBy { get; set; }
     public DateTime CreatedDate { get; set; }
     public DateTime? ModifiedDate { get; set; }
-
 }

@@ -1,13 +1,12 @@
-﻿using DiyarTask.Domain.Core;
+﻿namespace DiyarTask.Domain.Aggregates.InvoiceAggregate;
 
-namespace DiyarTask.Domain.Aggregates.InvoiceAggregate
+using DiyarTask.Domain.Core;
+
+public class PaymentError : BaseEntity<Guid>
 {
-    public class PaymentError : BaseEntity<Guid>
-    {
-        public int InvoiceId { get; set; } 
-        public DateTime OccurredOnUTC { get; set; } 
-        public DateTime OccurredOnLocal { get; set; } 
-        public string ErrorMessage { get; set; } 
-        public Invoice Invoice { get; set; }
-    }
+    public DateTime OccurredOnUTC { get; set; }
+    public DateTime OccurredOnLocal { get; set; }
+    public string ErrorMessage { get; set; }
+    public Guid InvoiceId { get; set; }
+    public Invoice Invoice { get; set; }
 }

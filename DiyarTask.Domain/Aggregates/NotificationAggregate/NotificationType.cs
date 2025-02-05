@@ -1,21 +1,17 @@
-﻿using DiyarTask.Domain.Core;
+﻿namespace DiyarTask.Domain.Aggregates.NotificationAggregate;
 
-namespace DiyarTask.Domain.Aggregates.NotificationAggregate
+using DiyarTask.Domain.Core;
+
+public class NotificationType : BaseEntity<int>
 {
-    public class NotificationType : BaseEntity<NotificationTypeEnum>
-    {
-        public string TypeName { get; private set; }
-        public string Description { get; private set; }
+    public string TypeName { get; private set; }
+    public string Description { get; private set; }
+    public List<NotificationTemplate> NotificationTemplates { get; private set; }
+}
 
-        // Navigation Properties
-        public List<NotificationTemplate> NotificationTemplates { get; private set; }
-        public List<Notification> Notifications { get; private set; }
-    }
-
-    public enum NotificationTypeEnum : int
-    {
-        Web = 1,
-        Sms = 2,
-        Email = 3
-    }
+public enum NotificationTypeEnum : int
+{
+    Web = 1,
+    Sms = 2,
+    Email = 3
 }

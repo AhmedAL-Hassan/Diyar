@@ -1,12 +1,12 @@
-﻿using DiyarTask.Domain.Aggregates.CustomerrAggregate;
+﻿namespace DiyarTask.Infrastructure.Persistence.Repositories;
+
+using DiyarTask.Domain.Aggregates.CustomerrAggregate;
 using DiyarTask.Domain.Common.Interfaces.Persistence;
-using DiyarTask.Domain.Core;
 
-namespace DiyarTask.Infrastructure.Persistence.Repositories;
-
-internal class CustomerRepository : Repository<Customer>, ICustomerRepository
+public class CustomerRepository : Repository<Customer>, ICustomerRepository
 {
-    public CustomerRepository(AppDbContext context) : base(context)
+    public CustomerRepository(DiyarDbContext context)
+        : base(context)
     {
     }
 }

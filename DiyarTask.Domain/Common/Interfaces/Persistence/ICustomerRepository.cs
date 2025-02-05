@@ -1,8 +1,8 @@
-﻿using DiyarTask.Domain.Aggregates.CustomerrAggregate;
+﻿namespace DiyarTask.Domain.Common.Interfaces.Persistence;
+
+using DiyarTask.Domain.Aggregates.CustomerrAggregate;
 using DiyarTask.Domain.Core;
 
-namespace DiyarTask.Domain.Common.Interfaces.Persistence;
-
-public interface ICustomerRepository: IRepository<Customer>
+public interface ICustomerRepository : IRepository<Customer>
 {
 }

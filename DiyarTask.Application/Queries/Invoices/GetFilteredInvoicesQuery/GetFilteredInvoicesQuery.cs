@@ -7,7 +7,7 @@ namespace DiyarTask.Application.Queries.Invoices.GetFilteredInvoicesQuery
 {
     public sealed class GetFilteredInvoicesQuery : BaseQuery<Invoice>, IRequest<List<InvoiceDto>>
     {
-        public int? CustomerId { get; set; }
+        public Guid? CustomerId { get; set; }
         public DateTime? DueDate { get; set; }
         public decimal? MinAmount { get; set; }
         public decimal? MaxAmount { get; set; }
@@ -17,7 +17,7 @@ namespace DiyarTask.Application.Queries.Invoices.GetFilteredInvoicesQuery
 
         public Expression<Func<Invoice, bool>> BuildExpression()
         {
-            Expression<Func<Invoice, bool>> filter = i => true; // Default to always true condition
+            Expression<Func<Invoice, bool>> filter = i => true;
 
             if (CustomerId.HasValue)
                 filter = CombineExpressions(filter, i => i.CustomerId == CustomerId.Value);
