@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 public class GetFilteredNotificationssQuery : BaseQuery<Notification>, IRequest<List<NotificationDto>>
 {
-    public int? CustomerId { get; set; }
+    public Guid? CustomerId { get; set; }
     public SentStatusEnum? SentStatus { get; set; }
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }
