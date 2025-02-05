@@ -1,5 +1,3 @@
-using Asp.Versioning;
-
 using DiyarTask.Application.DI;
 using DiyarTask.Infrastructure.DI;
 

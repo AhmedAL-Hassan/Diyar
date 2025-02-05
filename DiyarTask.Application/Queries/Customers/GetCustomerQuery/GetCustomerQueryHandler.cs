@@ -1,31 +1,28 @@
-﻿using DiyarTask.Domain.Common.Interfaces.Persistence;
+﻿namespace DiyarTask.Application.Queries.Customers.GetCustomerQuery;
+
+using DiyarTask.Domain.Common.Interfaces.Persistence;
 using DiyarTask.Shared.Core.Errors;
 using DiyarTask.Shared.Models.Response.Customer;
-using MapsterMapper;
-using MediatR;
 
-namespace DiyarTask.Application.Queries.Customers.GetCustomerQuery
+public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery, CustomerResponse>
 {
-    public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery, CustomerResponse>
+    private readonly IMapper _mapper;
+    private readonly ICustomerRepository _customerRepository;
+
+    public GetCustomerQueryHandler(IMapper mapper, ICustomerRepository customerRepository)
     {
-        private readonly ICustomerRepository _customerRepository;
-        private readonly IMapper _mapper;
+        _mapper = mapper;
+        _customerRepository = customerRepository;
+    }
 
-        public GetCustomerQueryHandler(ICustomerRepository customerRepository, IMapper mapper)
+    public async Task<CustomerResponse> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
+    {
+        var customer = await _customerRepository.GetByIdAsync(request.Id);
+        if (customer == null)
         {
-            _customerRepository = customerRepository;
-            _mapper = mapper;
+            throw new NotFoundException($"Customer with ID {request.Id} not found.");
         }
 
-        public async Task<CustomerResponse> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
-        {
-            var customer = await _customerRepository.GetByIdAsync(request.CustomerId);
-            if (customer == null)
-            {
-                throw new NotFoundException($"Customer with ID {request.CustomerId} not found.");
-            }
-
-            return _mapper.Map<CustomerResponse>(customer);
-        }
+        return _mapper.Map<CustomerResponse>(customer);
     }
 }

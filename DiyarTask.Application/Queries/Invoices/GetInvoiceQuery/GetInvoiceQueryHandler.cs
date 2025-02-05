@@ -11,21 +11,21 @@ using MediatR;
 
 public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery, CustomerResponse>
 {
-    private readonly ICustomerRepository _customerRepository;
     private readonly IMapper _mapper;
+    private readonly ICustomerRepository _customerRepository;
 
     public GetCustomerQueryHandler(ICustomerRepository customerRepository, IMapper mapper)
     {
-        _customerRepository = customerRepository;
         _mapper = mapper;
+        _customerRepository = customerRepository;
     }
 
     public async Task<CustomerResponse> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
     {
-        var customer = await _customerRepository.GetByIdAsync(request.CustomerId);
+        var customer = await _customerRepository.GetByIdAsync(request.Id);
         if (customer == null)
         {
-            throw new NotFoundException($"Customer with ID {request.CustomerId} not found.");
+            throw new NotFoundException($"Customer with ID {request.Id} not found.");
         }
 
         return _mapper.Map<CustomerResponse>(customer);

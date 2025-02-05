@@ -1,6 +1,6 @@
-﻿namespace DiyarTask.Contracts.Customers;
+﻿namespace DiyarTask.Contracts.Customers.Request;
 
-public sealed class CustomerParametersDto
+public sealed class SearchCustomerRequest
 {
     public string Name { get; set; }
     public string Email { get; set; }

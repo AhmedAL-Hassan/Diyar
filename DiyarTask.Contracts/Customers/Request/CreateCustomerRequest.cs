@@ -1,6 +1,6 @@
-﻿namespace DiyarTask.Contracts.Customers;
+﻿namespace DiyarTask.Contracts.Customers.Request;
 
-public sealed record CustomerForCreationDto
+public sealed record CreateCustomerRequest
 {
     public string Name { get; set; }
     public string Email { get; set; }
