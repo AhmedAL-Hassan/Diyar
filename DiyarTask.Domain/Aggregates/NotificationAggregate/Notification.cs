@@ -15,9 +15,3 @@ public class Notification : BaseEntity<Guid>
     public Guid NotificationTemplateId { get; private set; }
     public NotificationTemplate NotificationTemplate { get; private set; }
 }
-
-public enum SentStatusEnum
-{
-    Sent = 1,
-    Failed = 2
-}

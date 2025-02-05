@@ -8,10 +8,3 @@ public class NotificationType : BaseEntity<int>
     public string Description { get; private set; }
     public List<NotificationTemplate> NotificationTemplates { get; private set; }
 }
-
-public enum NotificationTypeEnum : int
-{
-    Web = 1,
-    Sms = 2,
-    Email = 3
-}
