@@ -1,6 +1,5 @@
-﻿using MediatR;
+﻿namespace DiyarTask.Application.Commands.Invoices.DeleteInvoiceCommand;
 
-namespace DiyarTask.Application.Commands.Invoices.DeleteInvoiceCommand
-{
-    public sealed record DeleteInvoiceCommand(Guid InvoiceId) : IRequest<bool>;
-}
+using MediatR;
+
+public sealed record DeleteInvoiceCommand(Guid InvoiceId) : IRequest<bool>;

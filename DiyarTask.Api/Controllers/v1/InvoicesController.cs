@@ -31,7 +31,7 @@ public sealed class InvoicesController : ControllerBase
     /// Creates a new Invoice record.
     /// </summary>
     [HttpPost(Name = "AddInvoice")]
-    public async Task<ActionResult<InvoiceDto>> AddInvoice([FromBody] InvoiceForCreationDto InvoiceForCreationDto)
+    public async Task<ActionResult<InvoiceResponse>> AddInvoice([FromBody] InvoiceForCreationDto InvoiceForCreationDto)
     {
         var command = _mapper.Map<CreateInvoiceCommand>(InvoiceForCreationDto);
         var commandResponse = await _mediator.Send(command);
@@ -43,7 +43,7 @@ public sealed class InvoicesController : ControllerBase
     /// Gets a single Invoice by ID.
     /// </summary>
     [HttpGet("{InvoiceId:guid}", Name = "GetInvoice")]
-    public async Task<ActionResult<InvoiceDto>> GetInvoice(Guid InvoiceId)
+    public async Task<ActionResult<InvoiceResponse>> GetInvoice(Guid InvoiceId)
     {
         var query = new GetInvoiceQuery(InvoiceId);
         var response = await _mediator.Send(query);
@@ -55,7 +55,7 @@ public sealed class InvoicesController : ControllerBase
     /// Gets a list of all Invoices.
     /// </summary>
     [HttpGet(Name = "GetInvoices")]
-    public async Task<ActionResult<List<InvoiceDto>>> GetInvoices([FromQuery] InvoiceParametersDto InvoiceParametersDto)
+    public async Task<ActionResult<List<InvoiceResponse>>> GetInvoices([FromQuery] InvoiceParametersDto InvoiceParametersDto)
     {
         var query = _mapper.Map<GetFilteredInvoicesQuery>(InvoiceParametersDto);
         var response = await _mediator.Send(query);
@@ -67,7 +67,7 @@ public sealed class InvoicesController : ControllerBase
     /// Updates an existing Invoice.
     /// </summary>
     [HttpPut("{InvoiceId:guid}", Name = "UpdateInvoice")]
-    public async Task<ActionResult<InvoiceDto>> UpdateInvoice(Guid InvoiceId, [FromBody] InvoiceForUpdateDto InvoiceForUpdateDto)
+    public async Task<ActionResult<InvoiceResponse>> UpdateInvoice(Guid InvoiceId, [FromBody] InvoiceForUpdateDto InvoiceForUpdateDto)
     {
         var command = _mapper.Map<UpdateInvoiceCommand>(InvoiceForUpdateDto);
         var commandResponse = await _mediator.Send(command);

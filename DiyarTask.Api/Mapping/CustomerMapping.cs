@@ -14,7 +14,7 @@
             config.NewConfig<CustomerForCreationDto, CreateCustomerCommand>();
             config.NewConfig<CustomerForUpdateDto, UpdateCustomerCommand>();
 
-            config.NewConfig<Customer, CustomerDto>();
+            config.NewConfig<Customer, CustomerResponse>();
         }
     }
 }

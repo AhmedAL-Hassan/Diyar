@@ -1,14 +1,13 @@
-﻿using MediatR;
+﻿namespace DiyarTask.Application.Reminders.Commands;
 
-namespace DiyarTask.Application.Reminders.Commands
+using MediatR;
+
+public sealed class DeleteReminderCommand : IRequest<bool>
 {
-    public sealed class DeleteReminderCommand : IRequest<bool>  // Returns a boolean indicating success or failure
+    public DeleteReminderCommand(Guid reminderId)
     {
-        public Guid ReminderId { get; }
-
-        public DeleteReminderCommand(Guid reminderId)
-        {
-            ReminderId = reminderId;
-        }
+        ReminderId = reminderId;
     }
+
+    public Guid ReminderId { get; }
 }

@@ -1,6 +1,6 @@
 ﻿namespace DiyarTask.Domain.Aggregates.InvoiceAggregate.Interfaces
 {
-    public interface IUpdateInvoiceCommand
+    public interface IUpdateInvoiceModel
     {
         DateTime DueDate { get; }
         decimal Amount { get; }

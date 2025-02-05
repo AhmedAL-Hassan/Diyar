@@ -1,6 +1,6 @@
 ﻿namespace DiyarTask.Domain.Aggregates.CustomerAggregate.Interfaces
 {
-    public interface ICreateCustomerCommand
+    public interface ICreateCustomerModel
     {
         string Name { get; }
         string Email { get; }

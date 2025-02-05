@@ -9,7 +9,7 @@ using MapsterMapper;
 
 using MediatR;
 
-public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery, CustomerDto>
+public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery, CustomerResponse>
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly IMapper _mapper;
@@ -20,7 +20,7 @@ public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery, Custome
         _mapper = mapper;
     }
 
-    public async Task<CustomerDto> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
+    public async Task<CustomerResponse> Handle(GetCustomerQuery request, CancellationToken cancellationToken)
     {
         var customer = await _customerRepository.GetByIdAsync(request.CustomerId);
         if (customer == null)
@@ -28,6 +28,6 @@ public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery, Custome
             throw new NotFoundException($"Customer with ID {request.CustomerId} not found.");
         }
 
-        return _mapper.Map<CustomerDto>(customer);
+        return _mapper.Map<CustomerResponse>(customer);
     }
 }

@@ -3,32 +3,29 @@
 using DiyarTask.Domain.Aggregates.InvoiceAggregate;
 using DiyarTask.Domain.Core;
 using DiyarTask.Shared.Models.Response.Invoice;
+
 using MapsterMapper;
+
 using MediatR;
 
-public sealed class CreateInvoiceCommandHandler : IRequestHandler<CreateInvoiceCommand, InvoiceDto>
+public sealed class CreateInvoiceCommandHandler : IRequestHandler<CreateInvoiceCommand, InvoiceResponse>
 {
-    private readonly IRepository<Invoice> _InvoiceRepository;
+    private readonly IRepository<Invoice> _invoiceRepository;
     private readonly IMapper _mapper;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateInvoiceCommandHandler(IRepository<Invoice> InvoiceRepository, IMapper mapper, IUnitOfWork unitOfWork)
+    public CreateInvoiceCommandHandler(IRepository<Invoice> InvoiceRepository, IMapper mapper)
     {
-        _InvoiceRepository = InvoiceRepository;
+        _invoiceRepository = InvoiceRepository;
         _mapper = mapper;
-        _unitOfWork = unitOfWork;
     }
 
-    public async Task<InvoiceDto> Handle(CreateInvoiceCommand request, CancellationToken cancellationToken)
+    public async Task<InvoiceResponse> Handle(CreateInvoiceCommand request, CancellationToken cancellationToken)
     {
-        // Map command to entity
         var invoice = Invoice.AddInvoice(request);
 
-            // Save to database
-        await _InvoiceRepository.AddAsync(invoice);
-        await _unitOfWork.SaveChangesAsync();
+        await _invoiceRepository.AddAsync(invoice);
+        await _invoiceRepository.SaveChangesAsync();
 
-        // Return mapped DTO
-        return _mapper.Map<InvoiceDto>(invoice);
+        return _mapper.Map<InvoiceResponse>(invoice);
     }
 }

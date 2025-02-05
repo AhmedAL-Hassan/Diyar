@@ -5,7 +5,7 @@ using MediatR;
 
 namespace DiyarTask.Application.Commands.Reminders.UpdateReminderCommand
 {
-    public class UpdateReminderCommand : IRequest<ReminderDto>, IUpdateReminderCommand
+    public class UpdateReminderCommand : IRequest<ReminderResponse>, IUpdateReminderCommand
     {
         public Guid ReminderId { get; set; }
         public ReminderTimingEnum ReminderTiming { get; set; }

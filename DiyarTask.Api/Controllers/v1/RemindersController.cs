@@ -30,7 +30,7 @@ public sealed class RemindersController : ControllerBase
     /// Creates a new Reminder record.
     /// </summary>
     [HttpPost(Name = "AddReminder")]
-    public async Task<ActionResult<ReminderDto>> AddReminder([FromBody] ReminderForCreationDto ReminderForCreationDto)
+    public async Task<ActionResult<ReminderResponse>> AddReminder([FromBody] ReminderForCreationDto ReminderForCreationDto)
     {
         var command = _mapper.Map<CreateReminderCommand>(ReminderForCreationDto);
         var commandResponse = await _mediator.Send(command);
@@ -42,7 +42,7 @@ public sealed class RemindersController : ControllerBase
     /// Gets a single Reminder by ID.
     /// </summary>
     [HttpGet("{ReminderId:guid}", Name = "GetReminder")]
-    public async Task<ActionResult<ReminderDto>> GetReminder(Guid ReminderId)
+    public async Task<ActionResult<ReminderResponse>> GetReminder(Guid ReminderId)
     {
         var query = new GetReminderQuery(ReminderId);
         var response = await _mediator.Send(query);
@@ -54,7 +54,7 @@ public sealed class RemindersController : ControllerBase
     /// Gets a list of all Reminders.
     /// </summary>
     [HttpGet(Name = "GetReminders")]
-    public async Task<ActionResult<List<ReminderDto>>> GetReminders([FromQuery] ReminderParametersDto ReminderParametersDto)
+    public async Task<ActionResult<List<ReminderResponse>>> GetReminders([FromQuery] ReminderParametersDto ReminderParametersDto)
     {
         var query = _mapper.Map<GetFilteredRemindersQuery>(ReminderParametersDto);
         var response = await _mediator.Send(query);
@@ -66,7 +66,7 @@ public sealed class RemindersController : ControllerBase
     /// Updates an existing Reminder.
     /// </summary>
     [HttpPut("{ReminderId:guid}", Name = "UpdateReminder")]
-    public async Task<ActionResult<ReminderDto>> UpdateReminder(Guid ReminderId, [FromBody] ReminderForUpdateDto ReminderForUpdateDto)
+    public async Task<ActionResult<ReminderResponse>> UpdateReminder(Guid ReminderId, [FromBody] ReminderForUpdateDto ReminderForUpdateDto)
     {
         var command = _mapper.Map<UpdateReminderCommand>(ReminderForUpdateDto);
         var commandResponse = await _mediator.Send(command);

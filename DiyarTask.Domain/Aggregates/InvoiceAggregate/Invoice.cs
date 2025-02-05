@@ -17,7 +17,7 @@ public sealed class Invoice : BaseEntity<Guid>, IAuditableEntity
     public DateTime CreatedDate { get; private set; }
     public DateTime? ModifiedDate { get; private set; }
 
-    public static Invoice AddInvoice(ICreateInvoiceCommand request)
+    public static Invoice AddInvoice(ICreateInvoiceModel request)
     {
         return new Invoice
         {
@@ -30,7 +30,7 @@ public sealed class Invoice : BaseEntity<Guid>, IAuditableEntity
         };
     }
 
-    public void UpdateInvoice(IUpdateInvoiceCommand request)
+    public void UpdateInvoice(IUpdateInvoiceModel request)
     {
         DueDate = request.DueDate;
         Amount = request.Amount;

@@ -1,6 +1,6 @@
 namespace DiyarTask.Shared.Models.Response.Invoice;
 
-public sealed record InvoiceDto
+public sealed record InvoiceResponse
 {
     public Guid Id { get; set; }
     public int CustomerId { get; set; }

@@ -6,7 +6,7 @@ using MediatR;
 
 namespace DiyarTask.Application.Queries.Invoices.GetFilteredInvoicesQuery
 {
-    public sealed class GetFilteredInvoicesQueryHandler : IRequestHandler<GetFilteredInvoicesQuery, List<InvoiceDto>>
+    public sealed class GetFilteredInvoicesQueryHandler : IRequestHandler<GetFilteredInvoicesQuery, List<InvoiceResponse>>
     {
         private readonly IRepository<Invoice> _InvoiceRepository;
         private readonly IMapper _mapper;
@@ -17,13 +17,13 @@ namespace DiyarTask.Application.Queries.Invoices.GetFilteredInvoicesQuery
             _mapper = mapper;
         }
 
-        public async Task<List<InvoiceDto>> Handle(GetFilteredInvoicesQuery request, CancellationToken cancellationToken)
+        public async Task<List<InvoiceResponse>> Handle(GetFilteredInvoicesQuery request, CancellationToken cancellationToken)
         {
             var expression = request.BuildExpression();
 
             var Invoices = _InvoiceRepository.GetFilteredAsync(expression);
 
-            return _mapper.Map<List<InvoiceDto>>(Invoices);
+            return _mapper.Map<List<InvoiceResponse>>(Invoices);
         }
     }
 }

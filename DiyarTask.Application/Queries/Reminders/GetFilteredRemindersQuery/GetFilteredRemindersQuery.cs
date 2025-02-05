@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace DiyarTask.Application.Queries.Reminders.GetFilteredRemindersQuery
 {
-    public class GetFilteredRemindersQuery : BaseQuery<Reminder>, IRequest<List<ReminderDto>>
+    public class GetFilteredRemindersQuery : BaseQuery<Reminder>, IRequest<List<ReminderResponse>>
     {
         public ReminderTimingEnum? ReminderTiming { get; set; }
         public ReminderDurationTypeEnum? DurationType { get; set; }

@@ -17,7 +17,7 @@ public sealed class Customer : BaseEntity<Guid>, IAuditableEntity
     public DateTime CreatedDate { get; private set; }
     public DateTime? ModifiedDate { get; private set; }
 
-    public static Customer AddCustomer(ICreateCustomerCommand request)
+    public static Customer AddCustomer(ICreateCustomerModel request)
     {
         var Customerr = new Customer
         {

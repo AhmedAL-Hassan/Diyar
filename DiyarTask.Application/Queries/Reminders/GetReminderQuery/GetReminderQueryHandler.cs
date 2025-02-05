@@ -6,7 +6,7 @@ using MediatR;
 
 namespace DiyarTask.Application.Queries.Reminders.GetReminderQuery
 {
-    public class GetReminderQueryHandler : IRequestHandler<GetReminderQuery, ReminderDto>
+    public class GetReminderQueryHandler : IRequestHandler<GetReminderQuery, ReminderResponse>
     {
         private readonly IRepository<Reminder> _reminderRepository;
         private readonly IMapper _mapper;
@@ -16,7 +16,7 @@ namespace DiyarTask.Application.Queries.Reminders.GetReminderQuery
             _mapper = mapper;
         }
 
-        public async Task<ReminderDto> Handle(GetReminderQuery request, CancellationToken cancellationToken)
+        public async Task<ReminderResponse> Handle(GetReminderQuery request, CancellationToken cancellationToken)
         {
             var reminder = await _reminderRepository.GetByIdAsync(request.ReminderId);
 
@@ -27,7 +27,7 @@ namespace DiyarTask.Application.Queries.Reminders.GetReminderQuery
             }
 
             // Map the Reminder entity to the DTO (ReminderDto)
-            var reminderDto = _mapper.Map<ReminderDto>(reminder);
+            var reminderDto = _mapper.Map<ReminderResponse>(reminder);
 
             return reminderDto;
         }

@@ -1,33 +1,31 @@
-﻿using DiyarTask.Domain.Aggregates.InvoiceAggregate;
+﻿namespace DiyarTask.Application.Commands.Invoices.DeleteInvoiceCommand;
+
+using DiyarTask.Domain.Aggregates.InvoiceAggregate;
 using DiyarTask.Domain.Core;
 using DiyarTask.Shared.Core.Errors;
+
 using MediatR;
 
-namespace DiyarTask.Application.Commands.Invoices.DeleteInvoiceCommand
+public class DeleteInvoiceCommandHandler : IRequestHandler<DeleteInvoiceCommand, bool>
 {
-    public class DeleteInvoiceCommandHandler : IRequestHandler<DeleteInvoiceCommand, bool>
+    private readonly IRepository<Invoice> _invoiceRepository;
+
+    public DeleteInvoiceCommandHandler(IRepository<Invoice> InvoiceRepository)
     {
-        private readonly IRepository<Invoice> _InvoiceRepository;
-        private readonly IUnitOfWork _unitOfWork;
+        _invoiceRepository = InvoiceRepository;
+    }
 
-        public DeleteInvoiceCommandHandler(IRepository<Invoice> InvoiceRepository, IUnitOfWork unitOfWork)
+    public async Task<bool> Handle(DeleteInvoiceCommand request, CancellationToken cancellationToken)
+    {
+        var Invoice = await _invoiceRepository.GetByIdAsync(request.InvoiceId);
+        if (Invoice is null)
         {
-            _InvoiceRepository = InvoiceRepository;
-            _unitOfWork = unitOfWork;
+            throw new NotFoundException($"Invoice with ID {request.InvoiceId} not found.");
         }
 
-        public async Task<bool> Handle(DeleteInvoiceCommand request, CancellationToken cancellationToken)
-        {
-            var Invoice = await _InvoiceRepository.GetByIdAsync(request.InvoiceId);
-            if (Invoice is null)
-            {
-                throw new NotFoundException($"Invoice with ID {request.InvoiceId} not found.");
-            }
+        await _invoiceRepository.DeleteAsync(Invoice);
+        await _invoiceRepository.SaveChangesAsync();
 
-            await _InvoiceRepository.DeleteAsync(Invoice);
-            await _unitOfWork.SaveChangesAsync();
-
-            return true;
-        }
+        return true;
     }
 }

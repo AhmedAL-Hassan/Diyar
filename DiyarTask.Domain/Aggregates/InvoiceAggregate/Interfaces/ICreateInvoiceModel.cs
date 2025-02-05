@@ -1,6 +1,6 @@
 ﻿namespace DiyarTask.Domain.Aggregates.InvoiceAggregate.Interfaces;
 
-public interface ICreateInvoiceCommand
+public interface ICreateInvoiceModel
 {
     Guid CustomerId { get; }
     DateTime DueDate { get; }

@@ -8,7 +8,7 @@ using MediatR;
 
 using System;
 
-public sealed class CreateInvoiceCommand : IRequest<InvoiceDto>, ICreateInvoiceCommand
+public sealed class CreateInvoiceCommand : IRequest<InvoiceResponse>, ICreateInvoiceModel
 {
     public Guid CustomerId { get; set; }
     public DateTime DueDate { get; set; }

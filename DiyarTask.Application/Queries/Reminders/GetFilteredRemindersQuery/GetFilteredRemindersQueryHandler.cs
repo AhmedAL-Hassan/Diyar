@@ -6,7 +6,7 @@ using MediatR;
 
 namespace DiyarTask.Application.Queries.Reminders.GetFilteredRemindersQuery
 {
-    public sealed class GetFilteredRemindersQueryHandler : IRequestHandler<GetFilteredRemindersQuery, List<ReminderDto>>
+    public sealed class GetFilteredRemindersQueryHandler : IRequestHandler<GetFilteredRemindersQuery, List<ReminderResponse>>
     {
         private readonly IRepository<Reminder> _ReminderRepository;
         private readonly IMapper _mapper;
@@ -17,13 +17,13 @@ namespace DiyarTask.Application.Queries.Reminders.GetFilteredRemindersQuery
             _mapper = mapper;
         }
 
-        public async Task<List<ReminderDto>> Handle(GetFilteredRemindersQuery request, CancellationToken cancellationToken)
+        public async Task<List<ReminderResponse>> Handle(GetFilteredRemindersQuery request, CancellationToken cancellationToken)
         {
             var expression = request.BuildExpression();
 
             var Reminders = _ReminderRepository.GetFilteredAsync(expression);
 
-            return _mapper.Map<List<ReminderDto>>(Reminders);
+            return _mapper.Map<List<ReminderResponse>>(Reminders);
         }
     }
 }

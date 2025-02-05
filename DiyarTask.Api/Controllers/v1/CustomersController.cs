@@ -30,7 +30,7 @@ public sealed class CustomersController : ControllerBase
     /// Creates a new Customer record.
     /// </summary>
     [HttpPost(Name = "AddCustomer")]
-    public async Task<ActionResult<CustomerDto>> AddCustomer([FromBody] CustomerForCreationDto customerForCreationDto)
+    public async Task<ActionResult<CustomerResponse>> AddCustomer([FromBody] CustomerForCreationDto customerForCreationDto)
     {
         var command = _mapper.Map<CreateCustomerCommand>(customerForCreationDto);
         var commandResponse = await _mediator.Send(command);
@@ -42,7 +42,7 @@ public sealed class CustomersController : ControllerBase
     /// Gets a single Customer by ID.
     /// </summary>
     [HttpGet("{customerId:guid}", Name = "GetCustomer")]
-    public async Task<ActionResult<CustomerDto>> GetCustomer(Guid customerId)
+    public async Task<ActionResult<CustomerResponse>> GetCustomer(Guid customerId)
     {
         var query = new GetCustomerQuery(customerId);
         var response = await _mediator.Send(query);
@@ -54,7 +54,7 @@ public sealed class CustomersController : ControllerBase
     /// Gets a list of all Customers.
     /// </summary>
     [HttpGet(Name = "GetCustomers")]
-    public async Task<ActionResult<List<CustomerDto>>> GetCustomers([FromQuery] CustomerParametersDto customerParametersDto)
+    public async Task<ActionResult<List<CustomerResponse>>> GetCustomers([FromQuery] CustomerParametersDto customerParametersDto)
     { 
         var query = _mapper.Map<GetFilteredCustomersQuery>(customerParametersDto);
         var response = await _mediator.Send(query);
@@ -66,7 +66,7 @@ public sealed class CustomersController : ControllerBase
     /// Updates an existing Customer.
     /// </summary>
     [HttpPut("{customerId:guid}", Name = "UpdateCustomer")]
-    public async Task<ActionResult<CustomerDto>> UpdateCustomer(Guid customerId, [FromBody] CustomerForUpdateDto customerForUpdateDto)
+    public async Task<ActionResult<CustomerResponse>> UpdateCustomer(Guid customerId, [FromBody] CustomerForUpdateDto customerForUpdateDto)
     {
         var command = _mapper.Map<UpdateCustomerCommand>(customerForUpdateDto);
         var commandResponse = await _mediator.Send(command);

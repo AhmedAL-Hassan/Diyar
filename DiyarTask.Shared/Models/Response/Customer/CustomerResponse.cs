@@ -1,6 +1,6 @@
 namespace DiyarTask.Shared.Models.Response.Customer;
 
-public sealed record CustomerDto
+public sealed record CustomerResponse
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

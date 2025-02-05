@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DiyarTask.Application.Queries.Customers.GetCustomerQuery
 {
-    public sealed class GetCustomerQuery : IRequest<CustomerDto>
+    public sealed class GetCustomerQuery : IRequest<CustomerResponse>
     {
         public Guid CustomerId { get; }
 

@@ -17,7 +17,7 @@ public class Reminder : BaseEntity<Guid>, IAuditableEntity
     public DateTime? ModifiedDate { get; private set; }
     public List<ReminderUser> ReminderUsers { get; private set; }
 
-    public static Reminder AddReminder(ICreateReminderCommand request)
+    public static Reminder AddReminder(ICreateReminderModel request)
     {
         return new Reminder
         {

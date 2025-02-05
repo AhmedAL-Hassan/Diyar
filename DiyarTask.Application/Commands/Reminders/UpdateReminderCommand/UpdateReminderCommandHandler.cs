@@ -10,7 +10,7 @@ using MapsterMapper;
 
 using MediatR;
 
-public class UpdateReminderCommandHandler : IRequestHandler<UpdateReminderCommand, ReminderDto>
+public class UpdateReminderCommandHandler : IRequestHandler<UpdateReminderCommand, ReminderResponse>
 {
     private readonly IRepository<Reminder> _reminderRepository;
     private readonly IMapper _mapper;
@@ -23,7 +23,7 @@ public class UpdateReminderCommandHandler : IRequestHandler<UpdateReminderComman
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<ReminderDto> Handle(UpdateReminderCommand request, CancellationToken cancellationToken)
+    public async Task<ReminderResponse> Handle(UpdateReminderCommand request, CancellationToken cancellationToken)
     {
         var reminder = await _reminderRepository.GetByIdAsync(request.ReminderId);
 
@@ -37,7 +37,7 @@ public class UpdateReminderCommandHandler : IRequestHandler<UpdateReminderComman
         await _reminderRepository.UpdateAsync(reminder);
         await _unitOfWork.SaveChangesAsync();
 
-        var reminderDto = _mapper.Map<ReminderDto>(reminder);
+        var reminderDto = _mapper.Map<ReminderResponse>(reminder);
 
         return reminderDto;
     }

@@ -2,7 +2,7 @@ namespace DiyarTask.Shared.Models.Response.Reminder;
 
 using DiyarTask.Shared.Enums;
 
-public sealed record ReminderDto
+public sealed record ReminderResponse
 {
     public Guid Id { get; set; }
     public ReminderTimingEnum ReminderTiming { get; set; }

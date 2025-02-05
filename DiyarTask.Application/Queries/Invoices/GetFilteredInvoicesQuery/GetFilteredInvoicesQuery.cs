@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace DiyarTask.Application.Queries.Invoices.GetFilteredInvoicesQuery
 {
-    public sealed class GetFilteredInvoicesQuery : BaseQuery<Invoice>, IRequest<List<InvoiceDto>>
+    public sealed class GetFilteredInvoicesQuery : BaseQuery<Invoice>, IRequest<List<InvoiceResponse>>
     {
         public Guid? CustomerId { get; set; }
         public DateTime? DueDate { get; set; }

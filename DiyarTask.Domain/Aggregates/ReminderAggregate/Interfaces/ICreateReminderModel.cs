@@ -2,7 +2,7 @@
 
 namespace DiyarTask.Domain.Aggregates.ReminderAggregate.Interfaces
 {
-    public interface ICreateReminderCommand
+    public interface ICreateReminderModel
     {
         ReminderTimingEnum ReminderTiming { get; set; }
         ReminderDurationTypeEnum DurationType { get; set; }

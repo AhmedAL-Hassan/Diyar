@@ -5,7 +5,7 @@ using MediatR;
 
 namespace DiyarTask.Application.Queries.Customers.GetFilteredCustomersQuery
 {
-    public sealed class GetFilteredCustomersQueryHandler : IRequestHandler<GetFilteredCustomersQuery, List<CustomerDto>>
+    public sealed class GetFilteredCustomersQueryHandler : IRequestHandler<GetFilteredCustomersQuery, List<CustomerResponse>>
     {
         private readonly ICustomerRepository _customerRepository;
         private readonly IMapper _mapper;
@@ -16,13 +16,13 @@ namespace DiyarTask.Application.Queries.Customers.GetFilteredCustomersQuery
             _mapper = mapper;
         }
 
-        public async Task<List<CustomerDto>> Handle(GetFilteredCustomersQuery request, CancellationToken cancellationToken)
+        public async Task<List<CustomerResponse>> Handle(GetFilteredCustomersQuery request, CancellationToken cancellationToken)
         {
             var expression = request.BuildExpression();
 
             var customers = _customerRepository.GetFilteredAsync(expression);
 
-            return _mapper.Map<List<CustomerDto>>(customers);
+            return _mapper.Map<List<CustomerResponse>>(customers);
         }
     }
 }

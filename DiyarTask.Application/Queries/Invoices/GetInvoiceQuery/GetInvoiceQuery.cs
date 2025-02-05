@@ -3,7 +3,7 @@ using MediatR;
 
 namespace DiyarTask.Application.Queries.Invoices.GetInvoiceQuery
 {
-    public sealed class GetInvoiceQuery : IRequest<InvoiceDto>
+    public sealed class GetInvoiceQuery : IRequest<InvoiceResponse>
     {
         public Guid InvoiceId { get; }
 

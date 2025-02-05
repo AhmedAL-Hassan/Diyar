@@ -3,7 +3,7 @@ using MediatR;
 
 namespace DiyarTask.Application.Queries.Reminders.GetReminderQuery
 {
-    public class GetReminderQuery : IRequest<ReminderDto>
+    public class GetReminderQuery : IRequest<ReminderResponse>
     {
         public Guid ReminderId { get; }
 

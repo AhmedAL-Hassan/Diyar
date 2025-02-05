@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace DiyarTask.Application.Queries.Customers.GetFilteredCustomersQuery
 {
-    public sealed class GetFilteredCustomersQuery : BaseQuery<Customer>, IRequest<List<CustomerDto>>
+    public sealed class GetFilteredCustomersQuery : BaseQuery<Customer>, IRequest<List<CustomerResponse>>
     {
         public string? Name { get; set; }
         public string? Email { get; set; }

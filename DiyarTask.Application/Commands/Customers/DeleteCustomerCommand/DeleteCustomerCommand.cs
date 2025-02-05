@@ -1,6 +1,7 @@
-﻿using MediatR;
+﻿namespace DiyarTask.Application.Commands.Customers.DeleteCustomerCommand;
 
-namespace DiyarTask.Application.Commands.Customers.DeleteCustomerCommand
+using MediatR;
+
+public sealed record DeleteCustomerCommand(Guid CustomerId) : IRequest<bool>
 {
-    public sealed record DeleteCustomerCommand(Guid CustomerId) : IRequest<bool>;
 }
