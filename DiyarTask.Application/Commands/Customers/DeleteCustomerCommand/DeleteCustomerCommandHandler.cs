@@ -3,8 +3,6 @@
 using DiyarTask.Domain.Common.Interfaces.Persistence;
 using DiyarTask.Shared.Core.Errors;
 
-using MediatR;
-
 public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerCommand, bool>
 {
     private readonly ICustomerRepository _customerRepository;

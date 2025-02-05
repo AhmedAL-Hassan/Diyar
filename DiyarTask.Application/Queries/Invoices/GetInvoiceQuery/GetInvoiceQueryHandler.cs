@@ -5,10 +5,6 @@ using DiyarTask.Domain.Common.Interfaces.Persistence;
 using DiyarTask.Shared.Core.Errors;
 using DiyarTask.Shared.Models.Response.Customer;
 
-using MapsterMapper;
-
-using MediatR;
-
 public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery, CustomerResponse>
 {
     private readonly IMapper _mapper;

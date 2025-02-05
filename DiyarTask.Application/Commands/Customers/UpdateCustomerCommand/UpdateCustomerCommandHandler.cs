@@ -4,10 +4,6 @@ using DiyarTask.Domain.Common.Interfaces.Persistence;
 using DiyarTask.Shared.Core.Errors;
 using DiyarTask.Shared.Models.Response.Customer;
 
-using MapsterMapper;
-
-using MediatR;
-
 public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, CustomerResponse>
 {
     private readonly ICustomerRepository _customerRepository;
@@ -21,10 +17,10 @@ public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerComman
 
     public async Task<CustomerResponse> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
     {
-        var customer = await _customerRepository.GetByIdAsync(request.CustomerId);
+        var customer = await _customerRepository.GetByIdAsync(request.Id);
         if (customer is null)
         {
-            throw new NotFoundException($"Customer with ID {request.CustomerId} not found.");
+            throw new NotFoundException($"Customer with ID {request.Id} not found.");
         }
 
         customer.Update(request);

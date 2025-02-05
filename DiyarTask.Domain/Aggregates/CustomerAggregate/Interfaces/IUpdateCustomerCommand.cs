@@ -1,10 +1,9 @@
-﻿namespace DiyarTask.Domain.Aggregates.CustomerAggregate.Interfaces
+﻿namespace DiyarTask.Domain.Aggregates.CustomerAggregate.Interfaces;
+
+public interface IUpdateCustomerCommand
 {
-    public interface IUpdateCustomerCommand
-    {
-        Guid CustomerId { get; }
-        string Name { get; }
-        string Email { get; }
-        string PhoneNumber { get; }
-    }
+    Guid Id { get; }
+    string Name { get; }
+    string Email { get; }
+    string PhoneNumber { get; }
 }
