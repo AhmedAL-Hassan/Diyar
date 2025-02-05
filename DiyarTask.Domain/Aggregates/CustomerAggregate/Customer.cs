@@ -24,6 +24,7 @@ public sealed class Customer : BaseEntity<Guid>, IAuditableEntity
             Id = Guid.NewGuid(),
             Name = request.Name,
             Email = request.Email,
+            PhoneNumber = request.PhoneNumber,
             CreatedDate = DateTime.UtcNow,
         };
 
@@ -40,7 +41,7 @@ public sealed class Customer : BaseEntity<Guid>, IAuditableEntity
     {
         if (request == null)
         {
-            throw new KeyNotFoundException($"Customer with ID {request.CustomerId} not found.");
+            throw new KeyNotFoundException($"Customer with ID {request.Id} not found.");
         }
 
         Name = request.Name;

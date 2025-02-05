@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using DiyarTask.Application.DI;
 using DiyarTask.Infrastructure.DI;
 
@@ -41,8 +42,8 @@ static void ConfigureAddApiVersioning(IServiceCollection services)
 {
     services.AddApiVersioning(options =>
     {
+        options.DefaultApiVersion = new ApiVersion(1, 0);
         options.ReportApiVersions = true;
         options.AssumeDefaultVersionWhenUnspecified = true;
-        options.DefaultApiVersion = ApiVersion.Default;
     });
 }

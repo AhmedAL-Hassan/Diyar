@@ -7,8 +7,14 @@
 
 	<ItemGroup>
 		<Compile Remove="Persistence\Migrations\**" />
+		<Compile Remove="Repositories\**" />
+		<Compile Remove="Services\**" />
 		<EmbeddedResource Remove="Persistence\Migrations\**" />
+		<EmbeddedResource Remove="Repositories\**" />
+		<EmbeddedResource Remove="Services\**" />
 		<None Remove="Persistence\Migrations\**" />
+		<None Remove="Repositories\**" />
+		<None Remove="Services\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -30,11 +36,5 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\DiyarTask.Application\DiyarTask.Application.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Repositories\" />
-		<Folder Include="Services\Hangfire\" />
-		<Folder Include="Services\SignalR\" />
 	</ItemGroup>
 </Project>

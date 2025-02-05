@@ -4,10 +4,13 @@ using DiyarTask.Api;
 using DiyarTask.Application.Commands.Customers.CreateCustomerCommand;
 using DiyarTask.Application.Commands.Customers.DeleteCustomerCommand;
 using DiyarTask.Application.Commands.Customers.UpdateCustomerCommand;
+using DiyarTask.Application.Commands.Invoices.CreateInvoiceCommand;
 using DiyarTask.Application.Queries.Customers.GetCustomerQuery;
 using DiyarTask.Application.Queries.Customers.GetFilteredCustomersQuery;
 using DiyarTask.Contracts.Customers.Request;
+using DiyarTask.Contracts.Invoices;
 using DiyarTask.Shared.Models.Response.Customer;
+using DiyarTask.Shared.Models.Response.Invoice;
 
 public sealed class CustomersController : BaseController
 {

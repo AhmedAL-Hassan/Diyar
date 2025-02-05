@@ -44,6 +44,9 @@ public static class DependenciesConfigurator
 
     private static void AddDataBaseServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<DiyarDbContext>(options => options.UseSqlServer("Server=AL-ASHQAR;Database=DiyarDb;Trusted_Connection=True;TrustServerCertificate=True;"), ServiceLifetime.Scoped);
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+        services.AddDbContext<DiyarDbContext>(options =>
+            options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
     }
 }
