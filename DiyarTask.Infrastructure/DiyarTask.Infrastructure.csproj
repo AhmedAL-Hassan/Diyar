@@ -8,13 +8,10 @@
 	<ItemGroup>
 		<Compile Remove="Persistence\Migrations\**" />
 		<Compile Remove="Repositories\**" />
-		<Compile Remove="Services\**" />
 		<EmbeddedResource Remove="Persistence\Migrations\**" />
 		<EmbeddedResource Remove="Repositories\**" />
-		<EmbeddedResource Remove="Services\**" />
 		<None Remove="Persistence\Migrations\**" />
 		<None Remove="Repositories\**" />
-		<None Remove="Services\**" />
 	</ItemGroup>
 
 	<ItemGroup>

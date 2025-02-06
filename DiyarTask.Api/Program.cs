@@ -1,10 +1,12 @@
 using Asp.Versioning;
 using DiyarTask.Application.DI;
+using DiyarTask.Application.Services.Hangfire.RecurningJobs;
 using DiyarTask.Infrastructure.DI;
-
+using Hangfire;
 using Mapster;
 
 var builder = WebApplication.CreateBuilder(args);
+var hangfireConfig = builder.Configuration.GetSection("Hangfire");
 
 AddAppServices(builder.Services, builder.Configuration);
 ConfigureAutoMapper(builder.Services);
@@ -14,6 +16,12 @@ builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseHangfireDashboard();
+
+AddRecurningJobs(hangfireConfig);
+
+app.UseHangfireDashboard();
 
 if (app.Environment.IsDevelopment())
 {
@@ -46,4 +54,14 @@ static void ConfigureAddApiVersioning(IServiceCollection services)
         options.ReportApiVersions = true;
         options.AssumeDefaultVersionWhenUnspecified = true;
     });
+}
+
+static void AddRecurningJobs(IConfigurationSection hangfireConfig)
+{
+    var jobId = hangfireConfig["JobId"];
+    var scheduleTime = hangfireConfig["ScheduleTime"];
+
+    RecurringJob.AddOrUpdate<ISendReminderInvoiceDueJob>(
+        jobId, job => job.ExecuteAsync(), Cron.Daily(int.Parse(scheduleTime.Split(':')[0]), int.Parse(scheduleTime.Split(':')[1]))
+    );
 }

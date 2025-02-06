@@ -1,12 +1,14 @@
 ﻿namespace DiyarTask.Infrastructure.DI;
 
-using DiyarTask.Domain.Aggregates.InvoiceAggregate;
-using DiyarTask.Domain.Aggregates.Reminder;
+using DiyarTask.Application.Services.Hangfire.RecurningJobs;
 using DiyarTask.Domain.Common.Interfaces.Persistence;
 using DiyarTask.Domain.Core;
 using DiyarTask.Infrastructure.Persistence;
 using DiyarTask.Infrastructure.Persistence.Repositories;
-
+using DiyarTask.Infrastructure.Services.Notification.Email;
+using DiyarTask.Infrastructure.Services.Notification.Sms;
+using DiyarTask.Infrastructure.Services.Notification.Web;
+using DiyarTask___Backup.Infrastructure.Services.Hangfire;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +22,7 @@ public static class DependenciesConfigurator
         services.AddMappingConfigurations();
         services.AddMediator();
         services.AddDataBaseServices(configuration);
+        services.AddHangfireServices(configuration);
     }
 
     private static void AddInfrastructure(this IServiceCollection services)
@@ -27,6 +30,11 @@ public static class DependenciesConfigurator
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddTransient<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<INotificationService, EmailNotificationService>();
+        services.AddScoped<INotificationService, SmsNotificationService>();
+        services.AddScoped<INotificationService, WebNotificationService>();
+        services.AddScoped<ISendReminderInvoiceDueJob, SendReminderInvoiceDueJob>();
+
     }
 
     public static void AddMappingConfigurations(this IServiceCollection services)
