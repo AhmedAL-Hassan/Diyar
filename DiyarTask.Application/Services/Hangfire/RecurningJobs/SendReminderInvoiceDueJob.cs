@@ -5,31 +5,43 @@ using DiyarTask.Domain.Core;
 using DiyarTask.Shared.Models.Notification;
 using System.Threading.Tasks;
 
-public class SendReminderInvoiceDueJob : ISendReminderInvoiceDueJob
+public sealed class SendReminderInvoiceDueJob : ISendReminderInvoiceDueJob
 {
+    private const int _batchSize = 500;
     private readonly ICustomerRepository _customerRepository;
+    private readonly IMapper _mapper;
     private readonly IEnumerable<INotificationService> _notificationServices;
 
-    public SendReminderInvoiceDueJob(IEnumerable<INotificationService> notificationServices, ICustomerRepository customerRepository)
+    public SendReminderInvoiceDueJob(
+        IEnumerable<INotificationService> notificationServices,
+        ICustomerRepository customerRepository,
+        IMapper mapper)
     {
         _notificationServices = notificationServices;
         _customerRepository = customerRepository;
+        _mapper = mapper;
     }
 
     public async Task ExecuteAsync()
     {
-        var userId = Guid.NewGuid();
-        var message = "Your invoice is due!";
-        var recipient = "customer@example.com";
-        var phoneNumber = "00962780136213";
 
-        var notificationData = new NotificationData(userId, message, recipient, phoneNumber);
-
-        foreach (var notificationService in _notificationServices)
+        var isThereMoreUsers = true;
+        DateTime? lastDateTime = null;
+        do
         {
-            await notificationService.SendAsync(notificationData);
-        }
+            var customers = await _customerRepository.GetCustomersToRemindAsync(_batchSize, lastDateTime);
 
-        Console.WriteLine("Reminder invoice sent to all services.");
+            foreach (var customer in customers) 
+            {
+                var notificationData = _mapper.Map<NotificationData>(customer);
+                foreach (var notificationService in _notificationServices)
+                {
+                    await notificationService.SendAsync(notificationData);
+                }
+            }
+
+            isThereMoreUsers = customers.Count == _batchSize;
+
+        } while (isThereMoreUsers);
     }
 }

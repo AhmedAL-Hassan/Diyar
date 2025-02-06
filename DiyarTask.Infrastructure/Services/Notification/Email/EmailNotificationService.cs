@@ -9,7 +9,7 @@ namespace DiyarTask.Infrastructure.Services.Notification.Email
         {
             // Simulate sending email
             await Task.Delay(500);
-            Console.WriteLine($"Email sent to {data.Recipient}: {data.Message}");
+            Console.WriteLine($"Email sent to {data.UserEmail}: {data.Message}");
         }
     }
 }

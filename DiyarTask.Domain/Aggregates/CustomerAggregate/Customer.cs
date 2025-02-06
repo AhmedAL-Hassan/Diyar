@@ -3,6 +3,7 @@
 using DiyarTask.Domain.Aggregates.CustomerAggregate.Interfaces;
 using DiyarTask.Domain.Aggregates.InvoiceAggregate;
 using DiyarTask.Domain.Aggregates.NotificationAggregate;
+using DiyarTask.Domain.Aggregates.Reminder;
 using DiyarTask.Domain.Core;
 
 public sealed class Customer : BaseEntity<Guid>, IAuditableEntity
@@ -16,6 +17,8 @@ public sealed class Customer : BaseEntity<Guid>, IAuditableEntity
     public string ModifiedBy { get; private set; }
     public DateTime CreatedDate { get; private set; }
     public DateTime? ModifiedDate { get; private set; }
+    public ICollection<ReminderUser> ReminderUsers { get; private set; }
+
 
     public static Customer AddCustomer(ICreateCustomerModel request)
     {

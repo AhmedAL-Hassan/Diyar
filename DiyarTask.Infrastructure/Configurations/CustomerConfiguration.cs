@@ -28,6 +28,8 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         builder.Property(c => c.CreatedDate)
             .IsRequired();
 
+        builder.HasIndex(c => c.CreatedDate);
+
         builder.Property(c => c.ModifiedDate)
             .IsRequired(false);
 

@@ -35,12 +35,9 @@ public class ReminderConfiguration : IEntityTypeConfiguration<Reminder>
         builder.Property(r => r.CreatedDate)
             .IsRequired();
 
+        builder.HasIndex(r => r.CreatedDate);
+
         builder.Property(r => r.ModifiedDate)
             .IsRequired(false);
-
-        builder.HasMany(r => r.ReminderUsers)
-            .WithOne()
-            .HasForeignKey(ru => ru.ReminderId)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -21,6 +21,8 @@ public class InvoiceConfiguration : IEntityTypeConfiguration<Invoice>
         builder.Property(i => i.PaymentStatus)
             .IsRequired();
 
+        builder.HasIndex(i => i.PaymentStatus);
+
         builder.Property(i => i.CreatedBy)
             .HasMaxLength(100);
 
@@ -29,6 +31,8 @@ public class InvoiceConfiguration : IEntityTypeConfiguration<Invoice>
 
         builder.Property(i => i.CreatedDate)
             .IsRequired();
+
+        builder.HasIndex(i => i.CreatedDate);
 
         builder.Property(i => i.ModifiedDate)
             .IsRequired(false);

@@ -8,6 +8,7 @@ using MediatR;
 
 public sealed class CreateReminderCommand : IRequest<ReminderResponse>, ICreateReminderModel
 {
+    public List<Guid> CustomerIds { get; set; }
     public ReminderTimingEnum ReminderTiming { get; set; }
     public ReminderDurationTypeEnum DurationType { get; set; }
     public int DurationInterval { get; set; }

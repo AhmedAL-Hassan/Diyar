@@ -10,4 +10,9 @@ public class ReminderUser : BaseEntity<Guid>
 
     public Guid CustomerId { get; private set; }
     public Customer Customer { get; private set; }
+
+    public void AddCustomer(Guid customerId) 
+    {
+        CustomerId = customerId;
+    }
 }

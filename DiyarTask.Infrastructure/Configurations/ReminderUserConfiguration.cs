@@ -16,15 +16,5 @@ public class ReminderUserConfiguration : IEntityTypeConfiguration<ReminderUser>
 
         builder.Property(ru => ru.CustomerId)
             .IsRequired();
-
-        builder.HasOne(ru => ru.Reminder)
-            .WithMany(r => r.ReminderUsers)
-            .HasForeignKey(ru => ru.ReminderId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder.HasOne(ru => ru.Customer)
-            .WithMany()
-            .HasForeignKey(ru => ru.CustomerId)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }

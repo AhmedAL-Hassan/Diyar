@@ -1,13 +1,11 @@
-﻿namespace DiyarTask.Shared.Models.Notification
+﻿namespace DiyarTask.Shared.Models.Response.Reminder
 {
-    public class NotificationData
+    public class CustomerReminderModel
     {
         public Guid UserId { get; set; }
         public string UserEmail { get; set; }
         public string UserPhoneNumber { get; set; }
         public decimal InvoiceAmount { get; set; }
         public DateTime InvocieCreatedDate { get; set; }
-        public string Message { get; set; }
     }
-
 }

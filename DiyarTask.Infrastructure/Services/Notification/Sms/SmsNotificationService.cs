@@ -9,7 +9,7 @@ namespace DiyarTask.Infrastructure.Services.Notification.Sms
         {
             // Simulate sending SMS
             await Task.Delay(500);
-            Console.WriteLine($"SMS sent to {data.PhoneNumber}: {data.Message}");
+            Console.WriteLine($"SMS sent to {data.UserPhoneNumber}: {data.Message}");
         }
     }
 

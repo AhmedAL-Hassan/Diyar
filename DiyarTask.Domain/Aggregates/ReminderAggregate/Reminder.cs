@@ -19,9 +19,10 @@ public class Reminder : BaseEntity<Guid>, IAuditableEntity
 
     public static Reminder AddReminder(ICreateReminderModel request)
     {
-        return new Reminder
+       var reminder = new Reminder
         {
             Id = Guid.NewGuid(),
+
             ReminderTiming = request.ReminderTiming,
             DurationType = request.DurationType,
             DurationInterval = request.DurationInterval,
@@ -29,6 +30,20 @@ public class Reminder : BaseEntity<Guid>, IAuditableEntity
             RepeatCount = request.RepeatCount,
             CreatedDate = DateTime.UtcNow
         };
+
+        if (request.CustomerIds != null) 
+        {
+            reminder.ReminderUsers = new List<ReminderUser>();
+
+            request.CustomerIds.ForEach(customerId =>
+            {
+                var reminderUser = new ReminderUser();
+                reminderUser.AddCustomer(customerId);
+                reminder.ReminderUsers.Add(reminderUser);
+            });
+        }
+
+        return reminder;
     }
 
     public void UpdateReminder(IUpdateReminderCommand request)
