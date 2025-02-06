@@ -30,7 +30,7 @@ public sealed class SendReminderInvoiceDueJob : ISendReminderInvoiceDueJob
         do
         {
             var customers = await _customerRepository.GetCustomersToRemindAsync(_batchSize, lastDateTime);
-
+            
             foreach (var customer in customers) 
             {
                 var notificationData = _mapper.Map<NotificationData>(customer);
@@ -39,6 +39,8 @@ public sealed class SendReminderInvoiceDueJob : ISendReminderInvoiceDueJob
                     await notificationService.SendAsync(notificationData);
                 }
             }
+
+            lastDateTime = customers.LastOrDefault()?.InvocieCreatedDate;
 
             isThereMoreUsers = customers.Count == _batchSize;
 

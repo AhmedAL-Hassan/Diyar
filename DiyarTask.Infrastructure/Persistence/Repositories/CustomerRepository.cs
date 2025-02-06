@@ -17,7 +17,7 @@ public class CustomerRepository : Repository<Customer>, ICustomerRepository
 
     public async Task<List<CustomerReminderModel>> GetCustomersToRemindAsync(int batchSize, DateTime? lastDateTime = null)
     {
-        var data = await (from c in _context.Customers
+        var data = await (from c in _context.Customers.AsNoTracking()
                            join i in _context.Invoices on c.Id equals i.CustomerId
                            join ru in _context.ReminderUsers on c.Id equals ru.CustomerId
                            join r in _context.Reminders on ru.ReminderId equals r.Id
